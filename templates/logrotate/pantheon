@@ -1,0 +1,7 @@
+/var/log/pantheon/*.log {
+    daily
+    copytruncate
+    rotate 14
+    missingok
+    compress
+}

@@ -1,0 +1,21 @@
+[Unit]
+Description=Pantheon Enterprise Ethereum java client
+After=syslog.target network.target
+
+[Service]
+User={{ pantheon_user }}
+Group={{ pantheon_group }}
+Environment=HOME=/home/{{ pantheon_user }}
+Type=simple
+{% if pantheon_cmdline_args %}
+ExecStart={{ pantheon_install_dir }}/bin/pantheon --config-file={{ pantheon_config_dir }}/config.toml {{ pantheon_cmdline_args }}
+{% else %}
+ExecStart={{ pantheon_install_dir }}/bin/pantheon --config-file={{ pantheon_config_dir }}/config.toml
+{% endif %}
+SuccessExitStatus=143
+StandardOutput=file:{{pantheon_log_dir}}/pantheon.log
+Restart=on-failure
+RestartSec=10s
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+	<dict>
+		<key>Label</key>
+		<string>tech.pegasys.pantheon</string>
+		<key>Program</key>
+		<string>"{{ pantheon_install_dir }}/bin/pantheon"</string>
+		<key>ProgramArguments</key>
+		<array>
+			<string>--config-file</string>
+			<string>"{{ pantheon_config_dir }}/config.toml"</string>
+		</array>
+		<key>RunAtLoad</key>
+		<true/>
+	</dict>
+</plist>

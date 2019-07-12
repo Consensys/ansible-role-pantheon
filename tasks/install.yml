@@ -1,0 +1,65 @@
+---
+- name: Ensure Pantheon group exists
+  group:
+    name: "{{ pantheon_group }}"
+    state: present
+  become: true
+
+- name: Create Pantheon user
+  user:
+    comment:  Pantheon client user
+    name: "{{ pantheon_user }}"
+    group: "{{ pantheon_group }}"
+  become: true
+
+- name: Create install directory
+  file:
+    path: "{{ pantheon_install_dir }}"
+    state: directory
+    owner: "{{ pantheon_user }}"
+    group: "{{ pantheon_group }}"
+  become: true
+  notify:
+    - Remove Pantheon install directory
+
+- name: Create log directory
+  file:
+    path: "/var/log/pantheon"
+    state: directory
+    owner: "{{ pantheon_user }}"
+    group: "{{ pantheon_group }}"
+  become: true
+  notify:
+    - Remove Pantheon log directory
+
+- name: Setup logrotate
+  template:
+    src: "logrotate/pantheon"
+    dest: "/etc/logrotate.d/pantheon"
+  become: true
+  notify:
+    - Remove Pantheon logrotate config
+
+- name: Extract Pantheon source to install directory
+  unarchive:
+    src: "{{ pantheon_download_url }}"
+    remote_src: true
+    dest: "{{ pantheon_install_dir }}"
+    owner: "{{ pantheon_user }}"
+    group: "{{ pantheon_group }}"
+    mode: '0775'
+    extra_opts:
+      - --strip-components
+      - '1'
+  become: true
+  notify:
+    - Remove Pantheon install directory
+
+- name: Add pantheon to system-wide $PATH
+  copy:
+    dest: "{{ pantheon_profile_file }}"
+    content: 'PATH=$PATH:{{ pantheon_install_dir }}/bin'
+  become: true
+  when: ansible_os_family != "Darwin"
+  notify:
+    - Remove Pantheon from PATH

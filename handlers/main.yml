@@ -1,0 +1,100 @@
+---
+- name: Reload systemd
+  systemd:
+    daemon_reload: yes
+  become: true
+  when: pantheon_managed_service
+
+- name: Restart Pantheon
+  service:
+    name: pantheon
+    state: restarted
+  become: true
+  when: pantheon_managed_service
+
+# Cleanup directories created at install
+- name: Remove Pantheon from PATH
+  file:
+    path: "{{ pantheon_profile_file }}"
+    state: absent
+  become: true
+  when: pantheon_uninstall
+
+- name: Remove Pantheon install directory
+  file:
+    path: "{{ pantheon_install_dir }}"
+    state: absent
+  become: true
+  when: pantheon_uninstall
+
+- name: Remove Pantheon config directory
+  file:
+    path: "{{ pantheon_config_dir }}"
+    state: absent
+  become: true
+  when: pantheon_uninstall
+
+- name: Remove Pantheon data directory
+  file:
+    path: "{{ pantheon_data_dir }}"
+    state: absent
+  become: true
+  when: pantheon_uninstall
+
+- name: Remove Pantheon logrotate config
+  file:
+    path: "/etc/logrotate.d/pantheon"
+    state: absent
+  become: true
+  when: pantheon_uninstall
+
+- name: Remove Pantheon log directory
+  file:
+    path: "{{ pantheon_log_dir }}"
+    state: absent
+  become: true
+  when: pantheon_uninstall
+
+# Cleanup systemd created at install
+- name: Stop and Disable Pantheon systemd service
+  service:
+    name: pantheon
+    state: stopped
+    enabled: false
+  when: ( pantheon_uninstall ) and
+    ( pantheon_managed_service ) and
+    ( ansible_os_family != "Darwin" )
+
+- name: Remove Pantheon systemd service file
+  file:
+    path: "{{ pantheon_systemd_dir }}/pantheon.service"
+    state: absent
+  become: true
+  when: ( pantheon_uninstall ) and
+    ( pantheon_managed_service ) and
+    ( ansible_os_family != "Darwin" )
+
+
+# Cleanup Darwin specific
+- name: Remove Pantheon Brew tap
+  homebrew_tap:
+    name: pegasyseng/pantheon
+    state: absent
+  when: ( pantheon_uninstall ) and
+    ( ansible_os_family == "Darwin" )
+
+- name: Uninstall Pantheon via brew
+  homebrew:
+    name: pantheon
+    state: absent
+  when: ( pantheon_uninstall ) and
+    ( ansible_os_family == "Darwin" )
+
+- name: Remove Pantheon launchd service
+  file:
+    path: "{{ pantheon_launchd_dir }}/tech.pegasys.pantheon.plist"
+    state: absent
+  become: true
+  when: ( pantheon_uninstall ) and
+    ( pantheon_managed_service ) and
+    ( ansible_os_family == "Darwin" )

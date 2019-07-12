@@ -1,0 +1,14 @@
+---
+- name: Add Pantheon Brew tap
+  homebrew_tap:
+    name: pegasyseng/pantheon
+    state: present
+  notify:
+    - check homebrew-tap uninstall
+
+- name: Install Pantheon via brew
+  homebrew:
+    name: pantheon
+    state: present
+  notify:
+    - check homebrew-package uninstall

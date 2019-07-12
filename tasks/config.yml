@@ -1,0 +1,34 @@
+---
+- name: Create configuration directory
+  file:
+    path: "{{ pantheon_config_dir }}"
+    state: directory
+    owner: "{{ pantheon_user }}"
+    group: "{{ pantheon_group }}"
+  become: true
+  notify:
+    - Remove Pantheon config directory
+
+- name: Generate config file
+  template:
+    src: "{{ pantheon_config_template }}"
+    dest: "{{ pantheon_config_dir }}/config.toml"
+    owner: "{{ pantheon_user }}"
+    group: "{{ pantheon_group }}"
+    mode: 0644
+  become: true
+  notify:
+    - Reload systemd
+    - Restart Pantheon
+    - Remove Pantheon config directory
+
+- name: Create data directory
+  file:
+    path: "{{ pantheon_data_dir }}"
+    state: directory
+    owner: "{{ pantheon_user }}"
+    group: "{{ pantheon_group }}"
+  become: true
+  notify:
+    - Remove Pantheon data directory
+    - Remove Pantheon install directory

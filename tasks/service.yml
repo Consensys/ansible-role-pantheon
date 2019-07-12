@@ -1,0 +1,40 @@
+---
+- name: Create Pantheon systemd service
+  template:
+    src: "{{ pantheon_systemd_template }}"
+    dest: "{{ pantheon_systemd_dir }}/pantheon.service"
+    owner: "root"
+    group: "root"
+  become: true
+  when: ( pantheon_managed_service ) and
+    ( ansible_os_family != "Darwin" )
+  notify:
+    -  Remove Pantheon systemd service file
+
+- name: Reload systemd to reread configs
+  systemd:
+    daemon_reload: yes
+  become: true
+
+- name: Enable and start Pantheon service
+  service:
+    name: pantheon
+    state: started
+    enabled: true
+  become: true
+  when: ( pantheon_managed_service ) and
+    ( ansible_os_family != "Darwin" )
+  notify:
+    - Stop and Disable Pantheon systemd service
+
+
+# Darwin only
+- name: Create Launchd service plist for Darwin
+  template:
+    src: "{{ pantheon_launchd_template }}"
+    dest: "{{ pantheon_launchd_dir }}/tech.pegasys.pantheon.plist"
+  become: true
+  when: ( ansible_os_family == "Darwin" ) and
+    ( pantheon_managed_service )
+  notify:
+    - Remove Pantheon launchd service
