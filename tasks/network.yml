@@ -64,5 +64,3 @@
   when: ( aws_public_ip_output.status != 200 ) and
     ( azure_public_ip_output.status != 200 ) and
     ( gcp_public_ip_output != 200 )
-
-

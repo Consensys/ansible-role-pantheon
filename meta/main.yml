@@ -19,9 +19,6 @@ galaxy_info:
     - name: EL
       versions:
         - 7
-    - name: Amazon
-      versions:
-        - 2
     - name: Fedora
       versions:
         - 28

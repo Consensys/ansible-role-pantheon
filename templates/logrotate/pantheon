@@ -1,7 +1,9 @@
 /var/log/pantheon/*.log {
+    rotate 14
+    notifempty
+    missingok
+    size 25M
     daily
     copytruncate
-    rotate 14
-    missingok
     compress
 }

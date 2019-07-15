@@ -38,7 +38,6 @@ All variables which can be overridden are stored in [defaults/main.yml](defaults
 | `pantheon_data_dir` | /opt/pantheon/data | Path for data directory|
 | `pantheon_log_dir` | /var/log/pantheon | Path for logs |
 | `pantheon_profile_file` | /etc/profile.d/pantheon-path.sh | Path to allow loading Pantheon into the system PATH |
-| `pantheon_uninstall` | false | Set true to uninstall Pantheon |
 | `pantheon_managed_service` | true | Enables a systemd service (or launchd if on Darwin) |
 | `pantheon_launchd_dir` | /Library/LaunchAgents | The default launchd directory  |
 | `pantheon_systemd_dir` | /etc/systemd/system/ | The default systemd directory |
@@ -63,12 +62,29 @@ All variables which can be overridden are stored in [defaults/main.yml](defaults
 
 ### Example Playbook
 
-1. Default setup
+1. Default setup:
+Install the role from galaxy
 ```
-- hosts: all
+ansible-galaxy install pegasyseng.pantheon
+```
+
+Create a requirements.yml with the following:
+```
+---
+- hosts: localhost
+  connection: local
+  force_handlers: True
+
   roles:
-  - role: pegasysTech.pantheon
+  - role: pegasyseng.pantheon
 ```
+
+Run with ansible-playbook:
+```
+ansible-playbook -v /path/to/requirements.yml
+```
+
+
 2. Install via github
 
 ```
@@ -100,4 +116,4 @@ Apache
 
 ### Author Information
 
-This role was created in 2019 by Pegasys Tech
+Pegasys Tech, 2019

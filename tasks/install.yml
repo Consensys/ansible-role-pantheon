@@ -12,6 +12,14 @@
     group: "{{ pantheon_group }}"
   become: true
 
+- name: Create base directory
+  file:
+    path: "{{ pantheon_base_dir }}"
+    state: directory
+    owner: "{{ pantheon_user }}"
+    group: "{{ pantheon_group }}"
+  become: true
+
 - name: Create install directory
   file:
     path: "{{ pantheon_install_dir }}"
@@ -19,8 +27,6 @@
     owner: "{{ pantheon_user }}"
     group: "{{ pantheon_group }}"
   become: true
-  notify:
-    - Remove Pantheon install directory
 
 - name: Create log directory
   file:
@@ -29,16 +35,12 @@
     owner: "{{ pantheon_user }}"
     group: "{{ pantheon_group }}"
   become: true
-  notify:
-    - Remove Pantheon log directory
 
 - name: Setup logrotate
   template:
     src: "logrotate/pantheon"
     dest: "/etc/logrotate.d/pantheon"
   become: true
-  notify:
-    - Remove Pantheon logrotate config
 
 - name: Extract Pantheon source to install directory
   unarchive:
@@ -52,14 +54,26 @@
       - --strip-components
       - '1'
   become: true
-  notify:
-    - Remove Pantheon install directory
+
+# will throw error the first time you install since the service isnt present
+- name: Stop Pantheon systemd service if running
+  service:
+    name: pantheon
+    state: stopped
+  when: ( pantheon_managed_service ) and
+    ( ansible_os_family != "Darwin" )
+  ignore_errors: true
+
+- name: Create a symlink to current
+  file:
+    src: "{{ pantheon_install_dir }}/"
+    dest: "{{ pantheon_current_dir }}"
+    state: link
+  become: true
 
 - name: Add pantheon to system-wide $PATH
   copy:
     dest: "{{ pantheon_profile_file }}"
-    content: 'PATH=$PATH:{{ pantheon_install_dir }}/bin'
+    content: 'PATH=$PATH:{{ pantheon_current_dir }}/bin'
   become: true
   when: ansible_os_family != "Darwin"
-  notify:
-    - Remove Pantheon from PATH

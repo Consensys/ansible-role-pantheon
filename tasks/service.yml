@@ -8,8 +8,6 @@
   become: true
   when: ( pantheon_managed_service ) and
     ( ansible_os_family != "Darwin" )
-  notify:
-    -  Remove Pantheon systemd service file
 
 - name: Reload systemd to reread configs
   systemd:
@@ -24,9 +22,6 @@
   become: true
   when: ( pantheon_managed_service ) and
     ( ansible_os_family != "Darwin" )
-  notify:
-    - Stop and Disable Pantheon systemd service
-
 
 # Darwin only
 - name: Create Launchd service plist for Darwin
@@ -36,5 +31,3 @@
   become: true
   when: ( ansible_os_family == "Darwin" ) and
     ( pantheon_managed_service )
-  notify:
-    - Remove Pantheon launchd service

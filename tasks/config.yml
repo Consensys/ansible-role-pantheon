@@ -6,8 +6,6 @@
     owner: "{{ pantheon_user }}"
     group: "{{ pantheon_group }}"
   become: true
-  notify:
-    - Remove Pantheon config directory
 
 - name: Generate config file
   template:
@@ -20,7 +18,6 @@
   notify:
     - Reload systemd
     - Restart Pantheon
-    - Remove Pantheon config directory
 
 - name: Create data directory
   file:
@@ -29,6 +26,3 @@
     owner: "{{ pantheon_user }}"
     group: "{{ pantheon_group }}"
   become: true
-  notify:
-    - Remove Pantheon data directory
-    - Remove Pantheon install directory
