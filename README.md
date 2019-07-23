@@ -58,6 +58,7 @@ All variables which can be overridden are stored in [defaults/main.yml](defaults
 | `pantheon_bootnodes` | [] | List of comma-separated enode URLs for P2P discovery bootstrap. When connecting to MainNet or public testnets, the default is a predefined list of enode URLs |
 | `pantheon_host_whitelist` | ["*"] | Comma-separated list of hostnames to allow access to the JSON-RPC API. By default, access from localhost and 127.0.0.1 is accepted. |
 | `pantheon_cmdline_args` | "" | Command line args that are passed in as overrides |
+| `pantheon_env_opts` | "" | Environmental variable PANTHEON_OPTS that gets passed to the JVM. eg: -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005 |
 
 
 ### Example Playbook
