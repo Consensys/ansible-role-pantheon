@@ -54,14 +54,22 @@
       - --strip-components
       - '1'
   become: true
+  register: extract_src
+
+- name: Set updated optionally to trigger a systemd restart at the end
+  set_fact:
+    pantheon_state_updates: "{{ pantheon_state_updates + ['pantheon.install_dir'] }}"
+  when: extract_src is changed
 
 # will throw error the first time you install since the service isnt present
 - name: Stop Pantheon systemd service if running
   service:
     name: pantheon
     state: stopped
-  when: ( pantheon_managed_service ) and
+  when: ( extract_src is changed ) and
+    ( pantheon_managed_service ) and
     ( ansible_os_family != "Darwin" )
+  become: true
   ignore_errors: true
 
 - name: Create a symlink to current
@@ -71,9 +79,3 @@
     state: link
   become: true
 
-- name: Add pantheon to system-wide $PATH
-  copy:
-    dest: "{{ pantheon_profile_file }}"
-    content: 'PATH=$PATH:{{ pantheon_current_dir }}/bin'
-  become: true
-  when: ansible_os_family != "Darwin"

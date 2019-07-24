@@ -8,19 +8,27 @@
   become: true
   when: ( pantheon_managed_service ) and
     ( ansible_os_family != "Darwin" )
+  register: systemd_file
+
+- name: Set updated optionally to trigger a systemd restart at the end
+  set_fact:
+    pantheon_state_updates: "{{ pantheon_state_updates + ['pantheon.systemd_file'] }}"
+  when: systemd_file is changed
 
 - name: Reload systemd to reread configs
   systemd:
     daemon_reload: yes
   become: true
+  when: systemd_file is changed
 
 - name: Enable and start Pantheon service
-  service:
+  systemd:
     name: pantheon
-    state: started
+    state: restarted
     enabled: true
   become: true
-  when: ( pantheon_managed_service ) and
+  when: ( pantheon_state_updates|length > 0 ) and
+    ( pantheon_managed_service ) and
     ( ansible_os_family != "Darwin" )
 
 # Darwin only
