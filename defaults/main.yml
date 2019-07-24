@@ -43,3 +43,4 @@ pantheon_metrics_port: 9545
 pantheon_bootnodes: []
 pantheon_host_whitelist: ["*"]
 pantheon_cmdline_args: ""
+pantheon_env_opts: ""
