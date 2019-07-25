@@ -15,9 +15,12 @@
     group: "{{ pantheon_group }}"
     mode: 0644
   become: true
-  notify:
-    - Reload systemd
-    - Restart Pantheon
+  register: config_toml
+
+- name: Set updated optionally to trigger a systemd restart at the end
+  set_fact:
+    pantheon_state_updates: "{{ pantheon_state_updates + ['pantheon.config_toml'] }}"
+  when: config_toml is changed
 
 - name: Create data directory
   file:

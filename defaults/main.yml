@@ -44,3 +44,6 @@ pantheon_bootnodes: []
 pantheon_host_whitelist: ["*"]
 pantheon_cmdline_args: ""
 pantheon_env_opts: ""
+
+# internal state to maintain idempotency
+pantheon_state_updates: []
