@@ -33,7 +33,7 @@ All variables which can be overridden are stored in [defaults/main.yml](defaults
 | `pantheon_user` | pantheon | Pantheon user |
 | `pantheon_group` | pantheon | Pantheon group |
 | `pantheon_version` | 1.1.4 | Current stable version of Pantheon |
-| `pantheon_download_url` | https://bintray.com/consensys/pegasys-repo/download_file?file_path=pantheon-{{ pantheon_version }}.tar.gz | The download tar.gz file used. You can use this if you build pantheon from source and publish to an internal repo. |
+| `pantheon_download_url` | https://bintray.com/consensys/pegasys-repo/download_file?file_path=pantheon-{{ pantheon_version }}.tar.gz | The download tar.gz file used. You can use this if you need to retrieve pantheon from a custom location such as an internal repository. |
 | `pantheon_install_dir` | /opt/pantheon | Path to install to  |
 | `pantheon_config_dir` | /etc/pantheon | Path for default configuration |
 | `pantheon_data_dir` | /opt/pantheon/data | Path for data directory|
