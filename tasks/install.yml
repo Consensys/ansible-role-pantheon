@@ -78,4 +78,3 @@
     dest: "{{ pantheon_current_dir }}"
     state: link
   become: true
-
