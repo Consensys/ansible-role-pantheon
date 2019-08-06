@@ -10,11 +10,11 @@ pantheon_download_url: "https://bintray.com/consensys/pegasys-repo/download_file
 
 # Directory paths
 pantheon_base_dir: "/opt/pantheon"
-pantheon_install_dir: "{{pantheon_base_dir}}/pantheon-{{pantheon_version}}"
-pantheon_current_dir: "{{pantheon_base_dir}}/current"
+pantheon_install_dir: "{{ pantheon_base_dir }}/pantheon-{{ pantheon_version }}"
+pantheon_current_dir: "{{ pantheon_base_dir }}/current"
 pantheon_config_dir: "/etc/pantheon"
 pantheon_config_template: "config.toml.j2"
-pantheon_data_dir: "{{pantheon_base_dir}}/data"
+pantheon_data_dir: "{{ pantheon_base_dir }}/data"
 pantheon_log_dir: "/var/log/pantheon"
 pantheon_profile_file: "/etc/profile.d/pantheon-path.sh"
 
