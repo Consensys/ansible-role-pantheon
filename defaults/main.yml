@@ -5,7 +5,6 @@ pantheon_user: pantheon
 pantheon_group: "{{ pantheon_user }}"
 
 # Version to install
-pantheon_version: 1.2.0
 pantheon_download_url: "https://bintray.com/consensys/pegasys-repo/download_file?file_path=pantheon-{{ pantheon_version }}.tar.gz"
 
 # Directory paths

@@ -1,4 +1,9 @@
 ---
+- name: Ensure we have pantheon_version
+  fail:
+    msg: You must set "pantheon_version" for this role to run
+  when: pantheon_version is not defined
+
 - name: Include OS and distribution specific variables
   include_vars: "{{ item }}"
   with_first_found:
