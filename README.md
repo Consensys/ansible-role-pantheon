@@ -30,7 +30,7 @@ All variables which can be overridden are stored in [defaults/main.yml](defaults
 
 | Name           | Default Value | Description                        |
 | -------------- | ------------- | -----------------------------------|
-| `pantheon_version` | ___unset___ | Version of Pantheon to install and run  __REQUIRED__ |
+| `pantheon_version` | ___unset___ |  __REQUIRED__ Version of Pantheon to install and run. All available versions are listed on our Pantheon [solutions](https://pegasys.tech/solutions/) page |
 | `pantheon_user` | pantheon | Pantheon user |
 | `pantheon_group` | pantheon | Pantheon group |
 | `pantheon_download_url` | https://bintray.com/consensys/pegasys-repo/download_file?file_path=pantheon-{{ pantheon_version }}.tar.gz | The download tar.gz file used. You can use this if you need to retrieve pantheon from a custom location such as an internal repository. |
@@ -71,6 +71,7 @@ ansible-galaxy install pegasyseng.pantheon
 ```
 
 Create a requirements.yml with the following:
+Replace `x.y.z` below with the version you would like to use from the Pantheon [solutions](https://pegasys.tech/solutions/) page
 ```
 ---
 - hosts: localhost
@@ -80,7 +81,7 @@ Create a requirements.yml with the following:
   roles:
   - role: pegasyseng.pantheon
     vars:
-      pantheon_version: 1.2.0
+      pantheon_version: x.y.z
 
 ```
 
@@ -97,6 +98,7 @@ ansible-galaxy install git+https://github.com/PegaSysEng/ansible-role-pantheon.g
 ```
 
 Create a requirements.yml with the following:
+Replace `x.y.z` below with the version you would like to use from the Pantheon [solutions](https://pegasys.tech/solutions/) page
 ```
 ---
 - hosts: localhost
@@ -106,7 +108,7 @@ Create a requirements.yml with the following:
   roles:
   - role: ansible-role-pantheon
     vars:
-      pantheon_version: 1.2.0
+      pantheon_version: x.y.z
 
 ```
 
