@@ -10,7 +10,6 @@ Please refer to the new ansible [role] (https://galaxy.ansible.com/pegasyseng/hy
 
 Apache
 
-
 ### Author Information
 
 Pegasys Tech, 2019
