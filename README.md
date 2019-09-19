@@ -42,6 +42,7 @@ All variables which can be overridden are stored in [defaults/main.yml](defaults
 | `pantheon_managed_service` | true | Enables a systemd service (or launchd if on Darwin) |
 | `pantheon_launchd_dir` | /Library/LaunchAgents | The default launchd directory  |
 | `pantheon_systemd_dir` | /etc/systemd/system/ | The default systemd directory |
+| `pantheon_systemd_state` | restarted | The default option for the systemd service state |
 | `pantheon_host_ip` | "" | The host IP that Pantheon uses for the P2P network. This specifies the host on which P2P listens |
 | `pantheon_default_ip` | "{{ default(ansible_host) \| default('127.0.0.1') }}" | The fallback default for `pantheon_host_ip` |
 | `pantheon_network` | mainnet | The network that this node will join. Other values are 'ropsten', 'rinkeby', 'goerli', 'dev'|
