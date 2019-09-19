@@ -1,34 +1,5 @@
 ---
-- name: Ensure we have pantheon_version
-  fail:
-    msg: You must set "pantheon_version" for this role to run
-  when: pantheon_version is not defined
+- name: Pantheon has moved to Hyperledger Besu https://galaxy.ansible.com/pegasyseng/hyperledger-besu
+  debug:
+    msg: Pantheon has moved to Hyperledger Besu https://galaxy.ansible.com/pegasyseng/hyperledger-besu
 
-- name: Include OS and distribution specific variables
-  include_vars: "{{ item }}"
-  with_first_found:
-    - files:
-        - "{{ ansible_distribution|lower }}.yml"
-        - "{{ ansible_os_family|lower }}.yml"
-      skip: true
-
-- name: Install pantheon
-  include_tasks: "install.yml"
-
-- name: Run OS specific installation tasks
-  include_tasks: "{{ item }}"
-  with_first_found:
-    - files:
-        - "{{ ansible_distribution|lower }}/install.yml"
-        - "{{ ansible_os_family|lower }}/install.yml"
-      skip: true
-
-- name: Get IP address to bind to if not provided
-  include_tasks: "network.yml"
-  when: not pantheon_host_ip
-
-- name: Create config
-  include_tasks: "config.yml"
-
-- name: Create Pantheon service
-  include_tasks: "service.yml"
