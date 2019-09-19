@@ -1,5 +1,5 @@
 ---
 - name: Pantheon has moved to Hyperledger Besu https://galaxy.ansible.com/pegasyseng/hyperledger-besu
-  debug:
+  fail:
     msg: Pantheon has moved to Hyperledger Besu https://galaxy.ansible.com/pegasyseng/hyperledger-besu
 
