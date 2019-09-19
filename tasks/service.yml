@@ -24,7 +24,7 @@
 - name: Enable and start Pantheon service
   systemd:
     name: pantheon
-    state: restarted
+    state: "{{ pantheon_systemd_state }}"
     enabled: true
   become: true
   when: ( pantheon_state_updates|length > 0 ) and

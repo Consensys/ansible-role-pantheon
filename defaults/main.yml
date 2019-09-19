@@ -19,6 +19,7 @@ pantheon_profile_file: "/etc/profile.d/pantheon-path.sh"
 
 # Managed service config
 pantheon_managed_service: true
+pantheon_systemd_state: restarted
 pantheon_systemd_template: pantheon.service.j2
 pantheon_systemd_dir: /etc/systemd/system
 pantheon_launchd_template: tech.pegasys.pantheon.plist.j2
