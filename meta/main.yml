@@ -2,7 +2,7 @@
 galaxy_info:
   author: PegaSys
   role_name: pantheon
-  description: Pantheon is an open-source java enterprise ethereum client
+  description: Pantheon is an open-source java enterprise ethereum client that has moved to [Hyperledger Besu](https://galaxy.ansible.com/pegasyseng/hyperledger-besu)
   company: PegaSys
   license: license (Apache)
   min_ansible_version: 2.6
